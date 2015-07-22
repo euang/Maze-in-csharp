@@ -38,24 +38,33 @@ namespace ConsoleApplication1
         {
             string output = "+" + String.Concat(Enumerable.Repeat("---+", Columns)) + "\n";
 
-            // each_row do | row |
-            string top = "|";
-            string bottom = "+";
 
-            for (int i = 0; i < grid.Rank; i++)
+            for (int x = 0; x < grid.Rank; x++)
             {
+                string top = "|";
+                string bottom = "+";
 
-            }
-            row.each do | cell |
-              cell = Cell.new(-1, -1) unless cell
+                for (int y = 0; y < grid.GetLength(x); y++)
+                {
+                    Cell cell;
+                    if(grid[x,y] == null){
+                        grid[x, y] = new Cell(-1, -1);
+                    }
+                    cell = grid[x, y];
+                    string body = "   ";// <-- that's THREE (3) spaces!  
 
-       string body = "   ";// <-- that's THREE (3) spaces!
-            east_boundary = (cell.linked ? (cell.east) ? " " : "|")
+                    string east_boundary = (cell.Linked ? (cell.east) ? " " : "|")
         top << body << east_boundary
+                }
+            }
+           
+
+
+          
 
         // three spaces below, too >>-------------->> >...<
             string south_boundary = (cell.linked ? (cell.south) ? "   " : "---");
-       string corner = "+";
+            string corner = "+";
             bottom += south_boundary + corner;
 
             output += top + "\n";
