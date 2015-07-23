@@ -30,6 +30,7 @@ namespace ConsoleApplication1
                     if (should_close_out)
                     {
                         var member = run[rand.Next(run.Count)];
+                        run.Remove(member);
                         if (member.North != null)
                         {
                             member.Link(member.North);

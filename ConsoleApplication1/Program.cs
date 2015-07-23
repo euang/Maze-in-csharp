@@ -15,17 +15,17 @@ namespace ConsoleApplication1
             //var bt = new BinaryTree();
             //grid = bt.On(grid);
             //Console.Write(grid);
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    grid = new Grid(4, 4);
-            //    grid = bt.On(grid);
-            //    Console.WriteLine();
-            //    Console.Write(grid);
-            //}
+           
             var swd = new Sidewinder();
             swd.On(grid);
             Console.WriteLine(grid);
-
+ for (int i = 0; i < 10; i++)
+            {
+                grid = new Grid(4, 4);
+                grid = swd.On(grid);
+                Console.WriteLine();
+                Console.Write(grid);
+            }
             Console.ReadLine();
         }
     }
