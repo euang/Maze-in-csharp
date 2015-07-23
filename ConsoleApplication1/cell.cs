@@ -7,10 +7,10 @@ namespace ConsoleApplication1
         public int Row { get; private set; }
         public int Column { get; private set; }
 
-        public object North { get; }
-        public object South { get; }
-        public object East { get; }
-        public object West { get; }
+        public Cell North { get; set; }
+        public Cell South { get; set; }
+        public Cell East { get; set; }
+        public Cell West { get; set; }
 
         public HashSet<Cell> Links;
 
@@ -42,11 +42,36 @@ namespace ConsoleApplication1
 
         }
 
-        public bool Linked(Cell cell)
+        public bool IsLinked(Cell cell)
         {
             return Links.Contains(cell);
         }
 
+        public List<Cell> Neighbours()
+        {
+            var list = new List<Cell>();
+            if (North != null)
+            {
+                list.Add(North);
+            }
+
+            if (South != null)
+            {
+                list.Add(South);
+            }
+
+            if (East != null)
+            {
+                list.Add(East);
+            }
+
+            if (West != null)
+            {
+                list.Add(West);
+            }
+
+            return list;
+        }
 
     }
 }
