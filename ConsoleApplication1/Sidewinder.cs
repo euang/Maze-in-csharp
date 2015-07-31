@@ -8,10 +8,10 @@ namespace ConsoleApplication1
 {
     class Sidewinder
     {
+        Random rand = new Random();
 
         public Grid On(Grid grid)
         {
-            var rand = new Random();
             for (int x = 0; x < grid.Rows; x++)
             {
                 List<Cell> run = new List<Cell>();

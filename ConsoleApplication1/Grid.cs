@@ -1,6 +1,8 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 
 namespace ConsoleApplication1
@@ -10,6 +12,7 @@ namespace ConsoleApplication1
         public int Rows;
         public int Columns;
         private Cell[,] grid;
+
         public Grid(int rows, int columns)
         {
             Rows = rows;
@@ -56,6 +59,43 @@ namespace ConsoleApplication1
 
         public override string ToString()
         {
+            return UnicodeRepresentation();
+        }
+
+        public Cell this[int row, int column] // Indexer declaration
+        {
+            get
+            {
+                // get and set accessors
+                if (row < 0 || row > Rows - 1)
+                {
+                    return null;
+                }
+                if (column < 0 || column > Columns - 1)
+                {
+                    return null;
+                }
+
+                return grid[row, column];
+            }
+        }
+
+        public Cell RandomCell()
+        {
+            var rnd = new Random();
+            int row = rnd.Next(0, Rows);
+            int column = rnd.Next(0, Columns);
+
+            return grid[row, column];
+        }
+
+        public int Size()
+        {
+            return Rows * Columns;
+        }
+
+        private string AsciiRepresentation()
+        {
             string output = "+" + String.Concat(Enumerable.Repeat("---+", Columns)) + "\n";
 
 
@@ -72,7 +112,7 @@ namespace ConsoleApplication1
                         grid[x, y] = new Cell(-1, -1);
                     }
                     cell = grid[x, y];
-                    string body = "   ";// <-- that's THREE (3) spaces!  
+                    string body = "   "; // <-- that's THREE (3) spaces!  
 
                     string east_boundary;
                     if (cell.IsLinked(cell.East))
@@ -108,36 +148,250 @@ namespace ConsoleApplication1
             return output;
         }
 
-        public Cell this[int row, int column]    // Indexer declaration
+        private string UnicodeRepresentation()
         {
-            get
+
+            string output = "\u250C";
+
+            //do top row
+            for (int y = 0; y < Columns; y++)
             {
-                // get and set accessors
-                if (row < 0 || row > Rows - 1)
+                Cell cell = grid[0, y];
+                if (cell.East == null)
                 {
-                    return null;
+                    output += "\u2500\u2500\u2500\u2510";
                 }
-                if (column < 0 || column > Columns - 1)
+                else
                 {
-                    return null;
+                    if (cell.IsLinked(cell.East))
+                    {
+                        output += "\u2500\u2500\u2500\u2500";
+                    }
+                    else
+                    {
+                        output += "\u2500\u2500\u2500\u252C";
+                    }
                 }
-
-                return grid[row, column];
             }
+            output += "\n";
+
+
+            for (int x = 0; x < Rows; x++)
+            {
+                Cell cell;
+
+                string top = '\u2502'.ToString();
+
+                cell = grid[x, 0];
+                string row;
+                if (cell.IsLinked(cell.South))
+                {
+                    row = "\u2502"; //│
+                }
+                else
+                {
+                    if (cell.South == null)
+                    {
+                        row = "\u2514"; //└
+                    }
+                    else
+                    {
+                        row = "\u251C"; //├
+                    }
+                }
+
+                for (int y = 0; y < Columns; y++)
+                {
+                    if (grid[x, y] == null)
+                    {
+                        grid[x, y] = new Cell(-1, -1);
+                    }
+                    cell = grid[x, y];
+                    string body = "   "; // <-- that's THREE (3) spaces!  
+
+                    string east_boundary;
+                    if (cell.IsLinked(cell.East))
+                    {
+                        east_boundary = " ";
+                    }
+                    else
+                    {
+                        east_boundary = "\u2502"; //│
+                    }
+                    top += body + east_boundary;
+
+
+                    //// three spaces below, too >>-------------->> >...<
+                    string south_boundary;
+                    if (cell.IsLinked(cell.South))
+                    {
+                        south_boundary = "   ";
+                    }
+                    else
+                    {
+                        south_boundary = "\u2500\u2500\u2500";
+                    }
+
+
+                    bool up, down = true, left, right;
+
+                    if (cell.South == null)
+                    {
+                        left = true;
+                        down = false;
+                    }
+                    else
+                    {
+                        left = !cell.IsLinked(cell.South);
+                    }
+
+                    if (cell.East == null)
+                    {
+                        up = true;
+                        right = false;
+                    }
+                    else
+                    {
+                        up = !cell.IsLinked(cell.East);
+                        if (cell.East.South == null)
+                        {
+                            right = true;
+                            down = false;
+                        }
+                        else
+                        {
+                            right = !cell.East.IsLinked(cell.East.South);
+                            down = !cell.South.IsLinked(cell.East.South);
+                        }
+                    }
+                    string corner = " ";
+                    if (left & right & up & down)
+                    {
+                        corner = "\u253C"; //┼
+                    }
+
+                    if (left & right & up & !down)
+                    {
+                        corner = "\u2534"; //┴
+                    }
+
+                    if (left & right & !up & down)
+                    {
+                        corner = "\u252C"; //┬
+                    }
+
+                    if (left & right & !up & !down)
+                    {
+                        corner = "\u2500"; //─
+                    }
+
+                    if (!left & right & up & down)
+                    {
+                        corner = "\u251C"; //├
+                    }
+
+                    if (!left & right & up & !down)
+                    {
+                        corner = "\u2514"; //└
+                    }
+
+                    if (!left & right & !up & down)
+                    {
+                        corner = "\u250C"; //└
+                    }
+
+                    if (left & !right & up & down)
+                    {
+                        corner = "\u2524"; //┤
+                    }
+
+                    if (!left & !right & up & down)
+                    {
+                        corner = "\u2502"; //│ 
+                    }
+
+                    if (left & !right & up & !down)
+                    {
+                        corner = "\u2518"; //┘
+                    }
+
+                    if (left & right & !up & !down)
+                    {
+                        corner = "\u2500";
+                    }
+
+                    if (left & !right & !up & !down)
+                    {
+                        corner = "\u2500";
+                    }
+
+                    if (left & !right & !up & down)
+                    {
+                        corner = "\u2510";
+                    }
+
+                    row += south_boundary + corner;
+                }
+                output += top + "\n";
+                output += row + "\n";
+
+            }
+
+            return output;
         }
 
-        public Cell RandomCell()
+        public void SaveToPng()
         {
-            var rnd = new Random();
-            int row = rnd.Next(0, Rows);
-            int column = rnd.Next(0, Columns);
-
-            return grid[row, column];
+            to_png_v1(20);
         }
 
-        public int Size()
+        private void to_png_v1(int cell_size = 10)
         {
-            return Rows * Columns;
+            int img_width = cell_size * Columns;
+            int img_height = cell_size * Rows;
+
+            Color background = Color.White;
+            Color wall = Color.Black;
+            // Create pen.
+            Pen wallPen = new Pen(wall, 3);
+
+            using (Bitmap img = new Bitmap(img_width + 1, img_height + 1))
+            {
+                using (Graphics g = Graphics.FromImage(img))
+                {
+                    g.Clear(background);
+
+                    foreach (var cell in Cells())
+                    {
+                        int x1 = cell.Column * cell_size;
+                        int y1 = cell.Row * cell_size;
+                        int x2 = (cell.Column + 1) * cell_size;
+                        int y2 = (cell.Row + 1) * cell_size;
+
+                        if (cell.North == null)
+                        {
+                            g.DrawLine(wallPen, x1, y1, x2, y1);
+                        }
+                        if (cell.West == null)
+                        {
+                            g.DrawLine(wallPen, x1, y1, x1, y2);
+                        }
+                        if (!cell.IsLinked(cell.East))
+                        {
+                            g.DrawLine(wallPen, x2, y1, x2, y2);
+                        }
+
+                        if (!cell.IsLinked(cell.South))
+                        {
+                            g.DrawLine(wallPen, x1, y2, x2, y2);
+                        }
+
+                    }
+                    img.Save(@"C:\code\maze.png", ImageFormat.Png);
+                }
+
+            }
+
         }
     }
 }
