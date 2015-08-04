@@ -339,7 +339,7 @@ namespace ConsoleApplication1
 
         public void SaveToPng()
         {
-            to_png_v1(20);
+            to_png_v2(20);
         }
 
         private void to_png_v1(int cell_size = 10)
@@ -391,9 +391,79 @@ namespace ConsoleApplication1
 
         }
 
+        private void to_png_v2(int cell_size = 10)
+        {
+            var img_width = cell_size * Columns;
+            var img_height = cell_size * Rows;
+
+            Color background = Color.White;
+            Color wall = Color.Black;
+            // Create pen.
+            Pen wallPen = new Pen(wall, 1);
+
+            using (Bitmap img = new Bitmap(img_width + 1, img_height + 1))
+            {
+                using (Graphics g = Graphics.FromImage(img))
+                {
+                    g.Clear(background);
+
+
+                    drawCells(cell_size, true, g, wallPen);
+                    drawCells(cell_size, false, g, wallPen);
+                    img.Save(@"C:\code\maze.png", ImageFormat.Png);
+                }
+            }
+        }
+
+        private void drawCells(int cell_size, bool backgroundMode, Graphics g, Pen wallPen)
+        {
+            foreach (var cell in Cells())
+            {
+                int x1 = cell.Column * cell_size;
+                int y1 = cell.Row * cell_size;
+                int x2 = (cell.Column + 1) * cell_size;
+                int y2 = (cell.Row + 1) * cell_size;
+
+                if (backgroundMode)
+                {
+                    var color = Background_color_for(cell);
+                    if (color.HasValue)
+                    {
+                        g.FillRectangle(new SolidBrush(color.Value), x1, y1, x2, y2);
+                    }
+                }
+                else
+                {
+                    if (cell.North == null)
+                    {
+                        g.DrawLine(wallPen, x1, y1, x2, y1);
+                    }
+                    if (cell.West == null)
+                    {
+                        g.DrawLine(wallPen, x1, y1, x1, y2);
+                    }
+                    if (!cell.IsLinked(cell.East))
+                    {
+                        g.DrawLine(wallPen, x2, y1, x2, y2);
+                    }
+
+                    if (!cell.IsLinked(cell.South))
+                    {
+                        g.DrawLine(wallPen, x1, y2, x2, y2);
+                    }
+                }
+            }
+        }
+
         protected virtual string CellContents(Cell cell)
         {
             return " ";
         }
+
+        protected virtual Color? Background_color_for(Cell cell)
+        {
+            return null;
+        }
+
     }
 }

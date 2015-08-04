@@ -12,22 +12,15 @@ namespace ConsoleApplication1
         static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;
-            var grid = new DistanceGrid(5, 5);
+            var grid = new ColouredGrid(25, 25);
             var swd = new Sidewinder();
             swd.On(grid);
 
-            var start = grid[0, 0];
+            var start = grid[grid.Rows/2, grid.Columns/2];
 
-            var cellDistances = start.CellDistances();
-            var max = cellDistances.Max();
-            var new_start = max.Key;
-
-            var new_distances = new_start.CellDistances();
-            var goal = new_distances.Max().Key;
-
-            grid.GridDistances = new_distances.PathTo(goal);
-            Console.WriteLine(grid);
-
+            grid.Distances = start.CellDistances();
+//            Console.WriteLine(grid);
+grid.SaveToPng();
 
             Console.ReadLine();
 

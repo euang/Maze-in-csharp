@@ -47,6 +47,7 @@
     <Compile Include="Base36.cs" />
     <Compile Include="Binarytree.cs" />
     <Compile Include="cell.cs" />
+    <Compile Include="ColouredGrid.cs" />
     <Compile Include="DistanceGrid.cs" />
     <Compile Include="Distances.cs" />
     <Compile Include="Grid.cs" />

@@ -8,16 +8,16 @@ namespace ConsoleApplication1
 {
     public class DistanceGrid : Grid
     {
-        public Distances GridDistances { get; set; }
+        public Distances Distances { get; set; }
         public DistanceGrid(int rows, int columns) : base(rows, columns)
         {
         }
 
         protected override string CellContents(Cell cell)
         {
-            if (GridDistances.ContainsKey(cell))
+            if (Distances.ContainsKey(cell))
             {
-                return Base36.Encode(GridDistances[cell]);
+                return Base36.Encode(Distances[cell]);
             }
             else
             {
