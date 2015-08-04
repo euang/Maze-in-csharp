@@ -12,7 +12,7 @@ namespace ConsoleApplication1
         public Cell East { get; set; }
         public Cell West { get; set; }
 
-        public HashSet<Cell> Links;
+        public readonly HashSet<Cell> Links;
 
         public Cell(int row, int column)
         {
@@ -73,5 +73,28 @@ namespace ConsoleApplication1
             return list;
         }
 
+        public Distances CellDistances()
+        {
+            var distances = new Distances(this);
+            var frontier = new List<Cell>() { this };
+
+            while (frontier.Count > 0)
+            {
+                var newFrontier = new List<Cell>();
+                foreach (var cell in frontier)
+                {
+                    foreach (var linked in cell.Links)
+                    {
+                        if (!distances.ContainsKey(linked))
+                        {
+                            distances.Add(linked, distances[cell] + 1);
+                            newFrontier.Add(linked);
+                        }
+                    }
+                }
+                frontier = newFrontier;
+            }
+            return distances;
+        }
     }
 }

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
@@ -9,8 +7,8 @@ namespace ConsoleApplication1
 {
     public class Grid
     {
-        public int Rows;
-        public int Columns;
+        public int Rows { get; }
+        public int Columns { get; }
         private Cell[,] grid;
 
         public Grid(int rows, int columns)
@@ -106,39 +104,38 @@ namespace ConsoleApplication1
 
                 for (int y = 0; y < Columns; y++)
                 {
-                    Cell cell;
                     if (grid[x, y] == null)
                     {
                         grid[x, y] = new Cell(-1, -1);
                     }
-                    cell = grid[x, y];
-                    string body = "   "; // <-- that's THREE (3) spaces!  
+                    var cell = grid[x, y];
+                    string body = $" {CellContents(cell)} ";
 
-                    string east_boundary;
+                    string eastBoundary;
                     if (cell.IsLinked(cell.East))
                     {
-                        east_boundary = " ";
+                        eastBoundary = " ";
                     }
                     else
                     {
-                        east_boundary = "|";
+                        eastBoundary = "|";
                     }
-                    top += body + east_boundary;
+                    top += body + eastBoundary;
 
 
                     //// three spaces below, too >>-------------->> >...<
-                    string south_boundary;
+                    string southBoundary;
                     if (cell.IsLinked(cell.South))
                     {
-                        south_boundary = "   ";
+                        southBoundary = "   ";
                     }
                     else
                     {
-                        south_boundary = "---";
+                        southBoundary = "---";
                     }
 
                     string corner = "+";
-                    bottom += south_boundary + corner;
+                    bottom += southBoundary + corner;
                 }
                 output += top + "\n";
                 output += bottom + "\n";
@@ -207,29 +204,29 @@ namespace ConsoleApplication1
                         grid[x, y] = new Cell(-1, -1);
                     }
                     cell = grid[x, y];
-                    string body = "   "; // <-- that's THREE (3) spaces!  
+                    string body = $" {CellContents(cell)} ";
 
-                    string east_boundary;
+                    string eastBoundary;
                     if (cell.IsLinked(cell.East))
                     {
-                        east_boundary = " ";
+                        eastBoundary = " ";
                     }
                     else
                     {
-                        east_boundary = "\u2502"; //│
+                        eastBoundary = "\u2502"; //│
                     }
-                    top += body + east_boundary;
+                    top += body + eastBoundary;
 
 
                     //// three spaces below, too >>-------------->> >...<
-                    string south_boundary;
+                    string southBoundary;
                     if (cell.IsLinked(cell.South))
                     {
-                        south_boundary = "   ";
+                        southBoundary = "   ";
                     }
                     else
                     {
-                        south_boundary = "\u2500\u2500\u2500";
+                        southBoundary = "\u2500\u2500\u2500";
                     }
 
 
@@ -330,7 +327,7 @@ namespace ConsoleApplication1
                         corner = "\u2510";
                     }
 
-                    row += south_boundary + corner;
+                    row += southBoundary + corner;
                 }
                 output += top + "\n";
                 output += row + "\n";
@@ -353,7 +350,7 @@ namespace ConsoleApplication1
             Color background = Color.White;
             Color wall = Color.Black;
             // Create pen.
-            Pen wallPen = new Pen(wall, 3);
+            Pen wallPen = new Pen(wall, 1);
 
             using (Bitmap img = new Bitmap(img_width + 1, img_height + 1))
             {
@@ -392,6 +389,11 @@ namespace ConsoleApplication1
 
             }
 
+        }
+
+        protected virtual string CellContents(Cell cell)
+        {
+            return " ";
         }
     }
 }

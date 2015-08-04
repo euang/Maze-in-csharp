@@ -44,8 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base36.cs" />
     <Compile Include="Binarytree.cs" />
     <Compile Include="cell.cs" />
+    <Compile Include="DistanceGrid.cs" />
+    <Compile Include="Distances.cs" />
     <Compile Include="Grid.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
