@@ -50,6 +50,7 @@ namespace ConsoleApplication1
         public List<Cell> Neighbours()
         {
             var list = new List<Cell>();
+
             if (North != null)
             {
                 list.Add(North);

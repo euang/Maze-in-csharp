@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AldousBroder.cs" />
     <Compile Include="Base36.cs" />
     <Compile Include="Binarytree.cs" />
     <Compile Include="cell.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sidewinder.cs" />
+    <Compile Include="Wilsons.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

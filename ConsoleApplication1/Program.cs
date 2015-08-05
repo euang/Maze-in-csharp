@@ -12,14 +12,14 @@ namespace ConsoleApplication1
         static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;
-            var grid = new ColouredGrid(25, 25);
-            var swd = new Sidewinder();
+            var grid = new Grid(5, 5);
+            var swd = new Wilsons();
             swd.On(grid);
 
             var start = grid[grid.Rows/2, grid.Columns/2];
 
-            grid.Distances = start.CellDistances();
-//            Console.WriteLine(grid);
+         //   grid.Distances = start.CellDistances();
+           Console.WriteLine(grid);
 grid.SaveToPng();
 
             Console.ReadLine();

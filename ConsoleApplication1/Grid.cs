@@ -87,10 +87,7 @@ namespace ConsoleApplication1
             return grid[row, column];
         }
 
-        public int Size()
-        {
-            return Rows * Columns;
-        }
+        public int Size => Rows*Columns;
 
         private string AsciiRepresentation()
         {
