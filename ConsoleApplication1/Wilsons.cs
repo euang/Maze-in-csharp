@@ -35,7 +35,8 @@ namespace ConsoleApplication1
                     var position = path.IndexOf(cell);
                     if (position > -1)
                     {
-                        path = path.GetRange(0, position);
+                        //add one to position as zero based.
+                        path = path.GetRange(0, position + 1);
                     }
                     else
                     {
