@@ -427,7 +427,7 @@ namespace ConsoleApplication1
                     var color = BackgroundColorFor(cell);
                     if (color.HasValue)
                     {
-                        g.FillRectangle(new SolidBrush(color.Value), x1, y1, x2, y2);
+                        g.FillRectangle(new SolidBrush(color.Value), x1, y1, cell_size, cell_size);
                     }
                 }
                 else
