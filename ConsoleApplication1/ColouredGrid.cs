@@ -27,11 +27,11 @@ namespace ConsoleApplication1
         }
 
 
-        protected override Color? Background_color_for(Cell cell)
+        protected override Color? BackgroundColorFor(Cell cell)
         {
 
             var distance = Distances[cell];
-            decimal intensity = (_maximum - distance) /(decimal)_maximum;
+            decimal intensity = (_maximum - distance) / (decimal)_maximum;
             int dark = (int)Math.Round(255 * intensity);
             int bright = (int)(128 + Math.Round(127 * intensity));
             return Color.FromArgb(dark, bright, dark);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace ConsoleApplication1
     {
         public int Rows { get; }
         public int Columns { get; }
-        private Cell[,] grid;
+        private Cell[,] _grid;
 
         public Grid(int rows, int columns)
         {
@@ -20,7 +21,7 @@ namespace ConsoleApplication1
             ConfigureCells();
         }
 
-        public void ConfigureCells()
+        private void ConfigureCells()
         {
             foreach (var cell in Cells())
             {
@@ -39,18 +40,18 @@ namespace ConsoleApplication1
 
         public Cell[] Cells()
         {
-            return grid.Cast<Cell>().ToArray();
+            return _grid.Cast<Cell>().ToArray();
         }
 
-        public void PrepareGrid()
+        private void PrepareGrid()
         {
-            grid = new Cell[Rows, Columns];
+            _grid = new Cell[Rows, Columns];
 
             for (int x = 0; x < Rows; x++)
             {
                 for (int y = 0; y < Columns; y++)
                 {
-                    grid[x, y] = new Cell(x, y);
+                    _grid[x, y] = new Cell(x, y);
                 }
             }
         }
@@ -74,7 +75,7 @@ namespace ConsoleApplication1
                     return null;
                 }
 
-                return grid[row, column];
+                return _grid[row, column];
             }
         }
 
@@ -84,10 +85,10 @@ namespace ConsoleApplication1
             int row = rnd.Next(0, Rows);
             int column = rnd.Next(0, Columns);
 
-            return grid[row, column];
+            return _grid[row, column];
         }
 
-        public int Size => Rows*Columns;
+        public int Size => Rows * Columns;
 
         private string AsciiRepresentation()
         {
@@ -101,11 +102,11 @@ namespace ConsoleApplication1
 
                 for (int y = 0; y < Columns; y++)
                 {
-                    if (grid[x, y] == null)
+                    if (_grid[x, y] == null)
                     {
-                        grid[x, y] = new Cell(-1, -1);
+                        _grid[x, y] = new Cell(-1, -1);
                     }
-                    var cell = grid[x, y];
+                    var cell = _grid[x, y];
                     string body = $" {CellContents(cell)} ";
 
                     string eastBoundary;
@@ -150,7 +151,7 @@ namespace ConsoleApplication1
             //do top row
             for (int y = 0; y < Columns; y++)
             {
-                Cell cell = grid[0, y];
+                Cell cell = _grid[0, y];
                 if (cell.East == null)
                 {
                     output += "\u2500\u2500\u2500\u2510";
@@ -176,7 +177,7 @@ namespace ConsoleApplication1
 
                 string top = '\u2502'.ToString();
 
-                cell = grid[x, 0];
+                cell = _grid[x, 0];
                 string row;
                 if (cell.IsLinked(cell.South))
                 {
@@ -196,11 +197,11 @@ namespace ConsoleApplication1
 
                 for (int y = 0; y < Columns; y++)
                 {
-                    if (grid[x, y] == null)
+                    if (_grid[x, y] == null)
                     {
-                        grid[x, y] = new Cell(-1, -1);
+                        _grid[x, y] = new Cell(-1, -1);
                     }
-                    cell = grid[x, y];
+                    cell = _grid[x, y];
                     string body = $" {CellContents(cell)} ";
 
                     string eastBoundary;
@@ -339,10 +340,10 @@ namespace ConsoleApplication1
             to_png_v2(20);
         }
 
-        private void to_png_v1(int cell_size = 10)
+        private void to_png_v1(int cellSize = 10)
         {
-            int img_width = cell_size * Columns;
-            int img_height = cell_size * Rows;
+            int img_width = cellSize * Columns;
+            int img_height = cellSize * Rows;
 
             Color background = Color.White;
             Color wall = Color.Black;
@@ -357,10 +358,10 @@ namespace ConsoleApplication1
 
                     foreach (var cell in Cells())
                     {
-                        int x1 = cell.Column * cell_size;
-                        int y1 = cell.Row * cell_size;
-                        int x2 = (cell.Column + 1) * cell_size;
-                        int y2 = (cell.Row + 1) * cell_size;
+                        int x1 = cell.Column * cellSize;
+                        int y1 = cell.Row * cellSize;
+                        int x2 = (cell.Column + 1) * cellSize;
+                        int y2 = (cell.Row + 1) * cellSize;
 
                         if (cell.North == null)
                         {
@@ -388,10 +389,10 @@ namespace ConsoleApplication1
 
         }
 
-        private void to_png_v2(int cell_size = 10)
+        private void to_png_v2(int cellSize = 10)
         {
-            var img_width = cell_size * Columns;
-            var img_height = cell_size * Rows;
+            var img_width = cellSize * Columns;
+            var img_height = cellSize * Rows;
 
             Color background = Color.White;
             Color wall = Color.Black;
@@ -405,14 +406,14 @@ namespace ConsoleApplication1
                     g.Clear(background);
 
 
-                    drawCells(cell_size, true, g, wallPen);
-                    drawCells(cell_size, false, g, wallPen);
+                    DrawCells(cellSize, true, g, wallPen);
+                    DrawCells(cellSize, false, g, wallPen);
                     img.Save(@"C:\code\maze.png", ImageFormat.Png);
                 }
             }
         }
 
-        private void drawCells(int cell_size, bool backgroundMode, Graphics g, Pen wallPen)
+        private void DrawCells(int cell_size, bool backgroundMode, Graphics g, Pen wallPen)
         {
             foreach (var cell in Cells())
             {
@@ -423,7 +424,7 @@ namespace ConsoleApplication1
 
                 if (backgroundMode)
                 {
-                    var color = Background_color_for(cell);
+                    var color = BackgroundColorFor(cell);
                     if (color.HasValue)
                     {
                         g.FillRectangle(new SolidBrush(color.Value), x1, y1, x2, y2);
@@ -457,10 +458,14 @@ namespace ConsoleApplication1
             return " ";
         }
 
-        protected virtual Color? Background_color_for(Cell cell)
+        protected virtual Color? BackgroundColorFor(Cell cell)
         {
             return null;
         }
 
+        public List<Cell> DeadEnds()
+        {
+            return Cells().Where(cell => cell.Links.Count == 1).ToList();
+        }
     }
 }
