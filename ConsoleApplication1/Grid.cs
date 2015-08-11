@@ -10,7 +10,7 @@ namespace ConsoleApplication1
     {
         public int Rows { get; }
         public int Columns { get; }
-        private Cell[,] _grid;
+        protected Cell[,] _grid;
 
         public Grid(int rows, int columns)
         {
@@ -21,11 +21,10 @@ namespace ConsoleApplication1
             ConfigureCells();
         }
 
-        private void ConfigureCells()
+        protected void ConfigureCells()
         {
             foreach (var cell in Cells())
             {
-
                 int row = cell.Row;
                 int col = cell.Column;
 
@@ -40,7 +39,7 @@ namespace ConsoleApplication1
 
         public Cell[] Cells()
         {
-            return _grid.Cast<Cell>().ToArray();
+            return _grid.Cast<Cell>().Where(c => c != null).ToArray();
         }
 
         private void PrepareGrid()

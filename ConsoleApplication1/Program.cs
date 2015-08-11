@@ -12,11 +12,14 @@ namespace ConsoleApplication1
         static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;
+
+           // var m = Mask.FromText(@"C:\maze\code\mask.txt");
+            var m = Mask.FromImage(@"c:\maze\code\maze_text.png");
             //var s = new Stopwatch();
             //s.Start();
-            //var grid = new Grid(50, 50);
-            //var swd = new HuntAndKill();
-            //swd.On(grid);
+            var grid = new MaskedGrid(m);
+            var swd = new RecursiveBackTracker();
+            swd.On(grid);
             //s.Stop();
             //Console.WriteLine(s.Elapsed);
             //Console.WriteLine($"Deadends {grid.DeadEnds().Count}");
@@ -24,9 +27,11 @@ namespace ConsoleApplication1
 
             ////   grid.Distances = start.CellDistances();
             //// Console.WriteLine(grid);
-            //grid.SaveToPng();
+            grid.SaveToPng();
 
-            DeadEndCounts();
+
+            
+           // DeadEndCounts();
             Console.ReadLine();
 
 
