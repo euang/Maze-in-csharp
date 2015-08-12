@@ -336,10 +336,10 @@ namespace ConsoleApplication1
 
         public void SaveToPng()
         {
-            to_png_v2(20);
+            to_png_v1(20);
         }
 
-        private void to_png_v1(int cellSize = 10)
+        protected virtual void to_png_v1(int cellSize = 10)
         {
             int img_width = cellSize * Columns;
             int img_height = cellSize * Rows;
