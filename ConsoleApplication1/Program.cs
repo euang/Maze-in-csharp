@@ -14,10 +14,10 @@ namespace ConsoleApplication1
             Console.OutputEncoding = Encoding.UTF8;
 
            // var m = Mask.FromText(@"C:\maze\code\mask.txt");
-            var m = Mask.FromImage(@"c:\maze\code\maze_text.png");
+            //var m = Mask.FromImage(@"c:\maze\code\maze_text.png");
             //var s = new Stopwatch();
             //s.Start();
-            var grid = new MaskedGrid(m);
+            var grid = new PolarGrid(8);
             var swd = new RecursiveBackTracker();
             swd.On(grid);
             //s.Stop();

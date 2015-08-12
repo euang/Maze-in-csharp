@@ -56,6 +56,9 @@
     <Compile Include="HuntAndKill.cs" />
     <Compile Include="Mask.cs" />
     <Compile Include="MaskedGrid.cs" />
+    <Compile Include="OrthogonalCell.cs" />
+    <Compile Include="OrthogonalGrid.cs" />
+    <Compile Include="PolarCell.cs" />
     <Compile Include="PolarGrid.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
