@@ -8,10 +8,9 @@ using System.Threading.Tasks;
 
 namespace ConsoleApplication1
 {
-    class OrthogonalGrid : Grid
+    public class OrthogonalGrid : Grid<OrthogonalCell>
     {
         protected OrthogonalCell[,] _grid;
-        public int Size => Rows * Columns;
 
         protected override void ConfigureCells()
         {
@@ -42,7 +41,20 @@ namespace ConsoleApplication1
             }
         }
 
-        public OrthogonalCell this[int row, int column] // Indexer declaration
+        public override OrthogonalCell RandomCell()
+        {
+            int row = rnd.Next(0, Rows);
+            int column = rnd.Next(0, Columns);
+
+            return _grid[row, column];
+        }
+
+        public OrthogonalGrid(int rows, int columns) : base(rows, columns)
+        {
+
+        }
+
+        public override OrthogonalCell this[int row, int column] // Indexer declaration
         {
             get
             {
@@ -58,23 +70,16 @@ namespace ConsoleApplication1
 
                 return _grid[row, column];
             }
+            set
+            {
+                throw new NotImplementedException();
+
+            }
         }
 
-
-        public override Cell[] Cells()
+        public override OrthogonalCell[] Cells()
         {
             return _grid.Cast<OrthogonalCell>().Where(c => c != null).ToArray();
-        }
-
-        public override Cell RandomCell()
-        {
-            {
-                int row = rnd.Next(0, Rows);
-                int column = rnd.Next(0, Columns);
-
-                return _grid[row, column];
-            }
-
         }
 
 
@@ -329,7 +334,7 @@ namespace ConsoleApplication1
 
         private void DrawCells(int cell_size, bool backgroundMode, Graphics g, Pen wallPen)
         {
-            foreach (var cell in Cells())
+            foreach (OrthogonalCell cell in Cells())
             {
                 int x1 = cell.Column * cell_size;
                 int y1 = cell.Row * cell_size;
@@ -390,7 +395,7 @@ namespace ConsoleApplication1
                 {
                     g.Clear(background);
 
-                    foreach (var cell in Cells())
+                    foreach (OrthogonalCell cell in Cells())
                     {
                         int x1 = cell.Column * cellSize;
                         int y1 = cell.Row * cellSize;

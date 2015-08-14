@@ -10,14 +10,14 @@ namespace ConsoleApplication1
     {
         private Random rand = new Random();
 
-        public Grid On(Grid grid,Cell startAt = null)
+        public Grid<Cell> On(Grid<Cell> grid, Cell startAt = null)
         {
             if (startAt == null)
             {
                 startAt = grid.RandomCell();
             }
 
-            var stack = new Stack<Cell>() ;
+            var stack = new Stack<Cell>();
             stack.Push(startAt);
 
             while (stack.Count != 0)

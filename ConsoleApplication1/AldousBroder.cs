@@ -10,7 +10,7 @@ namespace ConsoleApplication1
     {
         private Random rand = new Random();
 
-        public Grid On(Grid grid)
+        public Grid<Cell> On(Grid<Cell> grid)
         {
             var cell = grid.RandomCell();
             var unvisited = grid.Size - 1;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApplication1
 {
-    public class DeadEndColouredGrid : Grid
+    public class DeadEndColouredGrid : OrthogonalGrid
     {
 
 

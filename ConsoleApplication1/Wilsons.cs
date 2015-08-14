@@ -11,7 +11,7 @@ namespace ConsoleApplication1
     {
         Random rand = new Random();
 
-        public Grid On(Grid grid)
+        public Grid<Cell> On(Grid<Cell> grid)
         {
             var unvisited = new List<Cell>();
 

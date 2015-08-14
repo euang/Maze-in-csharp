@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApplication1
 {
-    public class DistanceGrid : Grid
+    public class DistanceGrid : OrthogonalGrid
     {
         public Distances Distances { get; set; }
         public DistanceGrid(int rows, int columns) : base(rows, columns)

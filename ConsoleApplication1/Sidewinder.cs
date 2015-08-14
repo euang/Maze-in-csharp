@@ -10,7 +10,7 @@ namespace ConsoleApplication1
     {
         Random rand = new Random();
 
-        public Grid On(OrthogonalGrid grid)
+        public Grid<OrthogonalCell> On(Grid<OrthogonalCell> grid)
         {
             for (int x = 0; x < grid.Rows; x++)
             {

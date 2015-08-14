@@ -13,7 +13,7 @@ namespace ConsoleApplication1
         {
             Console.OutputEncoding = Encoding.UTF8;
 
-           // var m = Mask.FromText(@"C:\maze\code\mask.txt");
+            // var m = Mask.FromText(@"C:\maze\code\mask.txt");
             //var m = Mask.FromImage(@"c:\maze\code\maze_text.png");
             //var s = new Stopwatch();
             //s.Start();
@@ -30,8 +30,8 @@ namespace ConsoleApplication1
             grid.SaveToPng();
 
 
-            
-           // DeadEndCounts();
+
+            // DeadEndCounts();
             Console.ReadLine();
 
 

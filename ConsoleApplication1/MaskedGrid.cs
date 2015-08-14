@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApplication1
 {
-    class MaskedGrid : Grid
+    class MaskedGrid : OrthogonalGrid
     {
         private Mask _mask;
 
@@ -21,9 +21,9 @@ namespace ConsoleApplication1
             ConfigureCells();
         }
 
-        private void PrepareGrid()
+        protected override void PrepareGrid()
         {
-            _grid = new Cell[Rows, Columns];
+            _grid = new OrthogonalCell[Rows, Columns];
 
             for (int x = 0; x < Rows; x++)
             {
@@ -31,7 +31,7 @@ namespace ConsoleApplication1
                 {
                     if (_mask[x, y])
                     {
-                        _grid[x, y] = new Cell(x, y);
+                        _grid[x, y] = new OrthogonalCell(x, y);
                     }
                     else
                     {

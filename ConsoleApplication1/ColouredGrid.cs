@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApplication1
 {
-    public class ColouredGrid : Grid
+    public class ColouredGrid : OrthogonalGrid
     {
         private Distances _distances;
         private int _maximum;

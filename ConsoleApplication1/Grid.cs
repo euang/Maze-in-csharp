@@ -6,10 +6,13 @@ using System.Linq;
 
 namespace ConsoleApplication1
 {
-    public abstract class Grid
+    public abstract class Grid<T> where T : Cell
     {
         public int Rows { get; }
         public int Columns { get; }
+
+        public int Size => Rows * Columns;
+
         protected Random rnd = new Random();
 
         public Grid(int rows, int columns)
@@ -31,9 +34,11 @@ namespace ConsoleApplication1
         protected abstract void PrepareGrid();
 
 
-        public abstract Cell RandomCell();
+        public abstract T RandomCell();
 
-        public abstract Cell[] Cells();
+        public abstract T[] Cells();
+
+        public abstract T this[int row, int column] { get; set; } // Indexer declaration
 
         public abstract void SaveToPng();
 
@@ -49,7 +54,7 @@ namespace ConsoleApplication1
             return null;
         }
 
-        public List<Cell> DeadEnds()
+        public List<T> DeadEnds()
         {
             return Cells().Where(cell => cell.Links.Count == 1).ToList();
         }

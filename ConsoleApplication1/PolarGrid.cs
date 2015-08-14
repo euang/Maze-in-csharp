@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApplication1
 {
-    internal class PolarGrid : Grid
+    internal class PolarGrid : Grid<PolarCell>
     {
         public PolarGrid(int rows, int columns) : base(rows, columns)
         {
@@ -18,13 +18,12 @@ namespace ConsoleApplication1
 
         public PolarGrid(int rows) : base(rows, 1)
         {
-            prepare_grid();
             ConfigureCells();
         }
 
         private PolarCell[][] _rows;
 
-        private void prepare_grid()
+        protected override void PrepareGrid()
         {
             _rows = new PolarCell[Rows][];
 
@@ -49,12 +48,12 @@ namespace ConsoleApplication1
             }
         }
 
-        public PolarCell[] Cells()
+        public override PolarCell[] Cells()
         {
             return _rows.SelectMany(cells => cells).ToArray();
         }
 
-        public PolarCell this[int row, int column] // Indexer declaration
+        public override PolarCell this[int row, int column] // Indexer declaration
         {
             get
             {
@@ -71,6 +70,7 @@ namespace ConsoleApplication1
                 }
                 return _rows[row][column];
             }
+            set { }
         }
 
 
@@ -91,7 +91,8 @@ namespace ConsoleApplication1
             }
         }
 
-        public new PolarCell RandomCell()
+
+        public override PolarCell RandomCell()
         {
             var row = rnd.Next(Rows);
             var col = rnd.Next(_rows[row].Length);

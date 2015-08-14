@@ -11,10 +11,10 @@ namespace ConsoleApplication1
         private Random rnd = new Random();
 
 
-        public Grid On(Grid grid)
+        public OrthogonalGrid On(OrthogonalGrid grid)
         {
 
-            foreach (var cell in grid.Cells())
+            foreach (OrthogonalCell cell in grid.Cells())
             {
                 List<Cell> neighbours = new List<Cell>();
                 if (cell.North != null)
