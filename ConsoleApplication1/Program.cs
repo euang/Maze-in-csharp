@@ -60,7 +60,7 @@ namespace ConsoleApplication1
                 var deadEndCounts = new List<int>();
                 for (int i = 0; i < tries; i++)
                 {
-                    var grid = new Grid(size, size);
+                    var grid = new OrthogonalGrid(size, size);
                     dynamic alg = Activator.CreateInstance(Type.GetType(Namespace + "." + algorithm));
                     alg.On(grid);
                     deadEndCounts.Add(grid.DeadEnds().Count);

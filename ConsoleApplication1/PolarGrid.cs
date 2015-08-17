@@ -153,7 +153,7 @@ namespace ConsoleApplication1
                             g.DrawLine(wallPen, cx, cy, dx, dy);
                         }
 
-                        if (!cell.IsLinked(cell.Cw))
+                        if (cell.IsLinked(cell.Cw))
                         {
                             // g.DrawLine(wallPen, ax, ay, cx, cy);
 

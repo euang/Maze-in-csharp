@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace ConsoleApplication1
 {
-    public abstract class Grid<T> where T : Cell
+    public abstract class Grid<T>:IGrid<T> where T : Cell
     {
         public int Rows { get; }
         public int Columns { get; }

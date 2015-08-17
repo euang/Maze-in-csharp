@@ -10,7 +10,7 @@ namespace ConsoleApplication1
     {
         private Random rand = new Random();
 
-        public Grid<Cell> On(Grid<Cell> grid, Cell startAt = null)
+        public IGrid<Cell> On(IGrid<Cell> grid, Cell startAt = null)
         {
             if (startAt == null)
             {
