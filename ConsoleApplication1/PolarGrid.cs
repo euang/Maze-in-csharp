@@ -150,15 +150,17 @@ namespace ConsoleApplication1
 
                         if (!cell.IsLinked(cell.Inward))
                         {
-                            g.DrawLine(wallPen, cx, cy, dx, dy);
+                         
+   g.DrawArc(wallPen, center - inner_radius, center - inner_radius, inner_radius * 2, inner_radius * 2, (int)ConvertRadiansToDegrees(theta_ccw), (int)ConvertRadiansToDegrees(theta_cw));
+                     g.DrawLine(new Pen(Color.Blue), ax, ay, cx, cy);
                         }
 
-                        if (cell.IsLinked(cell.Cw))
+                        if (!cell.IsLinked(cell.Cw))
                         {
-                            // g.DrawLine(wallPen, ax, ay, cx, cy);
+                            g.DrawLine(wallPen, cx, cy, dx, dy);
 
-                            g.DrawArc(wallPen, center - inner_radius, center - inner_radius, inner_radius * 2, inner_radius * 2, (int)ConvertRadiansToDegrees(theta_ccw), (int)ConvertRadiansToDegrees(theta_cw));
-                        }
+                            //g.DrawArc(wallPen,);
+                              }
 
 
 
