@@ -64,11 +64,14 @@ namespace ConsoleApplication1
                 }
 
                 //   return _rows[row][column % _rows[row].Length];
-                if (column < 0 || column > _rows[row].Length - 1)
-                {
-                    return null;
-                }
-                return _rows[row][column];
+                //if (column < 0 || column > _rows[row].Length - 1)
+                //{
+                //    return null;
+                //}
+
+                var mod = column - _rows[row].Length * Math.Floor((decimal)column / _rows[row].Length);
+
+                return _rows[row][(int)mod];
             }
             set { }
         }
@@ -137,8 +140,6 @@ namespace ConsoleApplication1
                         var theta_ccw = cell.Column * theta;
                         var theta_cw = (cell.Column + 1) * theta;
 
-
-
                         int ax = (int)(center + (inner_radius * Math.Cos(theta_ccw)));
                         int ay = (int)(center + (inner_radius * Math.Sin(theta_ccw)));
                         int bx = (int)(center + (outer_radius * Math.Cos(theta_ccw)));
@@ -150,19 +151,13 @@ namespace ConsoleApplication1
 
                         if (!cell.IsLinked(cell.Inward))
                         {
-                         
-   g.DrawArc(wallPen, center - inner_radius, center - inner_radius, inner_radius * 2, inner_radius * 2, (int)ConvertRadiansToDegrees(theta_ccw), (int)ConvertRadiansToDegrees(theta_cw));
-                     g.DrawLine(new Pen(Color.Blue), ax, ay, cx, cy);
+                            g.DrawArc(wallPen, center - inner_radius, center - inner_radius, inner_radius * 2, inner_radius * 2, (int)ConvertRadiansToDegrees(theta_ccw), (int)ConvertRadiansToDegrees(theta));
                         }
 
                         if (!cell.IsLinked(cell.Cw))
                         {
                             g.DrawLine(wallPen, cx, cy, dx, dy);
-
-                            //g.DrawArc(wallPen,);
-                              }
-
-
+                        }
 
                     }
                     g.DrawEllipse(wallPen, 0, 0, img_size, img_size);
