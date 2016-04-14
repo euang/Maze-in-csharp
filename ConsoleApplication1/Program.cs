@@ -17,7 +17,7 @@ namespace ConsoleApplication1
             //var m = Mask.FromImage(@"c:\maze\code\maze_text.png");
             //var s = new Stopwatch();
             //s.Start();
-            var grid = new PolarGrid(8);
+            var grid = new HexGrid(10,10);
             var swd = new RecursiveBackTracker();
             swd.On(grid);
             //s.Stop();

@@ -18,6 +18,8 @@ namespace ConsoleApplication1
         public Cell North { get; set; }
         public Cell South { get; set; }
 
+        public Cell East { get; set; }
+
         public HexCell(int row, int column) : base(row, column)
         {
         }

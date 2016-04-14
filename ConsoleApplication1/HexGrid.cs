@@ -45,6 +45,7 @@ namespace ConsoleApplication1
                 cell.SouthEast = this[south_diagonal, col + 1];
                 cell.North = this[row - 1, col];
                 cell.South = this[row + 1, col];
+                cell.East = this[row, col + 1];
 
             }
         }
