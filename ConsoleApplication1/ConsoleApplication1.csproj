@@ -54,6 +54,7 @@
     <Compile Include="Distances.cs" />
     <Compile Include="Grid.cs" />
     <Compile Include="HexCell.cs" />
+    <Compile Include="TriangleGrid.cs" />
     <Compile Include="HexGrid.cs" />
     <Compile Include="HuntAndKill.cs" />
     <Compile Include="IGrid.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecursiveBackTracker.cs" />
     <Compile Include="Sidewinder.cs" />
+    <Compile Include="TriangleCell.cs" />
     <Compile Include="Wilsons.cs" />
   </ItemGroup>
   <ItemGroup>
