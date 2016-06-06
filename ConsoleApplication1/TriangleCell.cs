@@ -37,6 +37,6 @@ public class TriangleCell : OrthogonalCell
             list.Add(South);
         }
 
-        return Neighbours();
+        return list;
     }
 }

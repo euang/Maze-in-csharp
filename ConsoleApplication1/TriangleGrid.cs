@@ -134,6 +134,7 @@ namespace ConsoleApplication1
                         var x_m = (int)(cx);
                         var x_e = (int)(cx + halfWidth);
 
+
                         if (cell.Upright)
                         {
                             apex_y = (int)(cy - halfHeight);
@@ -145,41 +146,25 @@ namespace ConsoleApplication1
                             base_y = (int)(cy - halfHeight);
                         }
 
+                        if (cell.West == null)
+                        {
+                            g.DrawLine(wallPen, x_w, base_y, x_m, apex_y);
+
+                        }
+
+                        if (!cell.IsLinked(cell.East))
+                        {
+                            g.DrawLine(wallPen, x_e, base_y, x_m, apex_y);
+                        }
+
                         var noSouth = cell.Upright && cell.South == null;
-                        var not_linked = !cell.Upright && !cell.Links(cell.North);
+                        var not_linked = !cell.Upright && !cell.IsLinked(cell.North);
 
                         if (noSouth || not_linked)
                         {
                             g.DrawLine(wallPen, x_e, base_y, x_w, base_y);
                         }
-                        if (cell.North == null)
-                        {
-                            g.DrawLine(wallPen, x_nw, y_n, x_ne, y_n);
-                        }
 
-                        if (cell.NorthWest == null)
-                        {
-                            g.DrawLine(wallPen, x_fw, y_m, x_nw, y_n);
-                        }
-
-                        if (cell.SouthWest == null)
-                        {
-                            g.DrawLine(wallPen, x_fw, y_m, x_nw, y_s);
-                        }
-                        if (!cell.IsLinked(cell.NorthEast))
-                        {
-                            g.DrawLine(wallPen, x_ne, y_n, x_fe, y_m);
-                        }
-
-                        if (!cell.IsLinked(cell.SouthEast))
-                        {
-                            g.DrawLine(wallPen, x_fe, y_m, x_ne, y_s);
-                        }
-
-                        if (!cell.IsLinked(cell.South))
-                        {
-                            g.DrawLine(wallPen, x_ne, y_s, x_nw, y_s);
-                        }
 
                     }
                     img.Save(@"C:\code\maze.png", ImageFormat.Png);
