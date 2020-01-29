@@ -69,6 +69,7 @@
     <Compile Include="RecursiveBackTracker.cs" />
     <Compile Include="Sidewinder.cs" />
     <Compile Include="TriangleCell.cs" />
+    <Compile Include="WeightedCell.cs" />
     <Compile Include="Wilsons.cs" />
   </ItemGroup>
   <ItemGroup>

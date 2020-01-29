@@ -45,7 +45,7 @@ namespace ConsoleApplication1
 
         public abstract List<Cell> Neighbours();
 
-        public Distances CellDistances()
+        public virtual Distances CellDistances()
         {
             var distances = new Distances(this);
             var frontier = new List<Cell>() { this };

@@ -17,17 +17,18 @@ namespace ConsoleApplication1
             //var m = Mask.FromImage(@"c:\maze\code\maze_text.png");
             //var s = new Stopwatch();
             //s.Start();
-            var grid = new TriangleGrid(10,17);
-            var swd = new RecursiveBackTracker();
+            var grid = new OrthogonalGrid(4, 4);
+            var swd = new BinaryTree();
             swd.On(grid);
+           // grid.braid(0.5);
             //s.Stop();
             //Console.WriteLine(s.Elapsed);
             //Console.WriteLine($"Deadends {grid.DeadEnds().Count}");
             ////  var start = grid[grid.Rows / 2, grid.Columns / 2];
 
             ////   grid.Distances = start.CellDistances();
-            //// Console.WriteLine(grid);
-            grid.SaveToPng();
+            Console.WriteLine(grid);
+           // grid.SaveToPng();
 
 
 
